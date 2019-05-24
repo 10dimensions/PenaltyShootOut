@@ -45,10 +45,18 @@ public class BodySourceView : MonoBehaviour
     };
 
 
-    public Kinect.JointType JointTrackRef;
-    public Kinect.JointType JointToTrack;
-    public Vector3 JointToTrackPos;
-    public Text VectorToDisplay;
+    [Header("left")]
+    public Kinect.JointType L_JointTrackRef;
+    public Kinect.JointType L_JointToTrack;
+    public Vector3 L_JointToTrackPos;
+    public Text L_VectorToDisplay;
+
+
+    [Header("right")]
+    public Kinect.JointType R_JointTrackRef;
+    public Kinect.JointType R_JointToTrack;
+    public Vector3 R_JointToTrackPos;
+    public Text R_VectorToDisplay;
     
     void Update () 
     {
@@ -139,8 +147,11 @@ public class BodySourceView : MonoBehaviour
     
     private void RefreshBodyObject(Kinect.Body body, GameObject bodyObject)
     {   
-        Vector3 TrackPtSrc  = Vector3.zero; 
-        Vector3 TrackPtDest = Vector3.zero;
+        Vector3 L_TrackPtSrc  = Vector3.zero; 
+        Vector3 L_TrackPtDest = Vector3.zero;
+
+        Vector3 R_TrackPtSrc  = Vector3.zero; 
+        Vector3 R_TrackPtDest = Vector3.zero;
        
         for (Kinect.JointType jt = Kinect.JointType.SpineBase; jt <= Kinect.JointType.ThumbRight; jt++)
         {
@@ -161,20 +172,47 @@ public class BodySourceView : MonoBehaviour
                 lr.SetPosition(0, jointObj.localPosition);
                 lr.SetPosition(1, GetVector3FromJoint(targetJoint.Value));
 
-                if(jt == JointTrackRef)
+
+
+                 // ***********************                  Left_Tracker       ********************************* //
+
+                if(jt == L_JointTrackRef)
                 {
-                    TrackPtSrc = GetVector3FromJoint(targetJoint.Value) - jointObj.localPosition;
+                    L_TrackPtSrc = GetVector3FromJoint(targetJoint.Value) - jointObj.localPosition;
                 }
 
-                if(jt == JointToTrack) 
+                if(jt == L_JointToTrack) 
                 {
                     
 
-                    TrackPtDest = GetVector3FromJoint(targetJoint.Value) - jointObj.localPosition;
+                    L_TrackPtDest = GetVector3FromJoint(targetJoint.Value) - jointObj.localPosition;
                 }
 
-                VectorToDisplay.text = (TrackPtDest-TrackPtSrc).ToString();
-                JointToTrackPos = (TrackPtDest-TrackPtSrc);
+                L_VectorToDisplay.text = (L_TrackPtDest-L_TrackPtSrc).ToString();
+                L_JointToTrackPos = (L_TrackPtDest-L_TrackPtSrc);
+
+                
+                // ***********************                  Right_Tracker       ********************************* //
+ 
+                if(jt == R_JointTrackRef)
+                {
+                    R_TrackPtSrc = GetVector3FromJoint(targetJoint.Value) - jointObj.localPosition;
+                }
+
+                if(jt == R_JointToTrack) 
+                {
+                    
+
+                    R_TrackPtDest = GetVector3FromJoint(targetJoint.Value) - jointObj.localPosition;
+                }
+
+                R_VectorToDisplay.text = (R_TrackPtDest - R_TrackPtSrc).ToString();
+                R_JointToTrackPos = (R_TrackPtDest - R_TrackPtSrc);
+
+
+                 // ******************************************************************************************** //
+
+
 
                 lr.SetColors(GetColorForState (sourceJoint.TrackingState), GetColorForState(targetJoint.Value.TrackingState));
             }
@@ -204,4 +242,5 @@ public class BodySourceView : MonoBehaviour
     {
         return new Vector3(joint.Position.X * 10, joint.Position.Y * 10, joint.Position.Z * 10);
     }
+
 }

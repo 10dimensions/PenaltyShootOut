@@ -27,7 +27,7 @@ public class KickCompute : MonoBehaviour
 
     void Update()
     {
-        KickVector = VectorReference.GetComponent<BodySourceView>().JointToTrackPos;
+        KickVector = VectorReference.GetComponent<BodySourceView>().R_JointToTrackPos;
 
         if(!BeginKick && KickVector.z<-1.7f)
         {
