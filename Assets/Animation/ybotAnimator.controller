@@ -8,7 +8,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: DiveLeft
-  m_Speed: 1
+  m_Speed: 1.6
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -2659213142453920606}
@@ -177,7 +177,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: DiveRight
-  m_Speed: 1
+  m_Speed: 1.6
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 6854183541007790952}
