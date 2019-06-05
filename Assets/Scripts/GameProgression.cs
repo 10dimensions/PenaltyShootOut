@@ -48,6 +48,8 @@ public class GameProgression : MonoBehaviour
         Debug.Log("started");
     }
 
+
+
     private void ReInitWrapper()
     {   
        if(!isRenit) StartCoroutine(ReInitialize());
@@ -100,14 +102,21 @@ public class GameProgression : MonoBehaviour
         L_KickVector = VectorReference.GetComponent<BodySourceView>().L_JointToTrackPos;
         R_KickVector = VectorReference.GetComponent<BodySourceView>().R_JointToTrackPos;
 
-        // if(!BeginKick && KickVector.z<-1.7f)
-        // {
-        //     BeginKick = true;
-        //     StartTime = DateTime.UtcNow;
+        if(!BeginKick && R_KickVector.z<0.8f && R_KickVector.z<0.8f)
+        {
+            BeginKick = true;
+            StartTime = DateTime.UtcNow;
 
-        //     Debug.Log("started");
-        // }
+            Debug.Log("started");
+        }
 
+        if(!BeginKick && L_KickVector.z<0.8f && L_KickVector.z<0.8f)
+        {
+            BeginKick = true;
+            StartTime = DateTime.UtcNow;
+
+            Debug.Log("started");
+        }
 
 
         if(BeginKick && !EndKick && R_KickVector.z > 1.7f)
@@ -158,7 +167,7 @@ public class GameProgression : MonoBehaviour
 
         KickAngleNormal = new Vector3(KickAngleNormal.x, (KickAngleNormal.y + 0.4f), -KickAngleNormal.z);
 
-        GameObject _futball = GameObject.FindGameObjectWithTag("football");
+        GameObject _futball = GameObject.FindGameObjectWithTag("football").transform.GetChild(0).gameObject;
         _futball.GetComponent<Rigidbody>().AddForce(KickAngleNormal*KickPower*100f/_timedel);
 
         Debug.Log(_timedel + " + " + KickAngleNormal*KickPower*1000f/_timedel);
